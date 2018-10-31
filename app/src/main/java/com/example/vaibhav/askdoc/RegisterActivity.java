@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -68,14 +69,20 @@ public class RegisterActivity extends AppCompatActivity {
 
     }
 
-    private void register(final String username, String email, String password){
+    private void register(final String username, final String email, String password){
 
         auth.createUserWithEmailAndPassword(email,password)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
 
+                        Log.d("Bakchod", "Completed");
+
                         if(task.isSuccessful()){
+
+                            Log.d("Bakchod", "Success");
+
+                            Toast.makeText(RegisterActivity.this, "Registered", Toast.LENGTH_SHORT).show();
 
                             FirebaseUser firebaseUser = auth.getCurrentUser();
                             String userid = firebaseUser.getUid();
@@ -86,13 +93,17 @@ public class RegisterActivity extends AppCompatActivity {
                             hashMap.put("id",userid);
                             hashMap.put("username",username);
                             hashMap.put("imageURL","default");
+                            hashMap.put("email",email);
 
                             reference.setValue(hashMap).addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
 
+                                    Log.d("Bakchod", "REF COMPLETE");
+
                                     if(task.isSuccessful())
                                     {
+                                        Log.d("Bakchod", "REF SET SUCCESS");
                                         Intent intent = new Intent(RegisterActivity.this,MainActivity.class);
                                         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                         startActivity(intent);
@@ -101,6 +112,8 @@ public class RegisterActivity extends AppCompatActivity {
                                 }
                             });
                         }else {
+                            Log.d("Bakchod", "Fail");
+
                             Toast.makeText(RegisterActivity.this,"You can't register with this email or passowrd",Toast.LENGTH_SHORT).show();
 
                         }
