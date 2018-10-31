@@ -42,8 +42,8 @@ public class MessageActivity extends AppCompatActivity {
         setContentView(R.layout.activity_message);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
-        getSupportActionBar().setTitle("");
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+//        getSupportActionBar().setTitle("");
+//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -55,7 +55,7 @@ public class MessageActivity extends AppCompatActivity {
         }
 
         profile_image = findViewById(R.id.profile_image);
-        username = findViewById(R.id.username);
+        username = findViewById(R.id.username_main);
         btn_send = findViewById(R.id.btn_send);
         text_send = findViewById(R.id.text_send);
         intent=getIntent();
