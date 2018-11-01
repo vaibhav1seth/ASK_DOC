@@ -1,5 +1,6 @@
 package com.example.vaibhav.askdoc;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -21,6 +22,7 @@ public class LoginActivity extends AppCompatActivity {
     MaterialEditText email_lgn , password_lgn;
     Button login;
     FirebaseAuth auth;
+    private ProgressDialog progressBar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,6 +31,7 @@ public class LoginActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Login");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        progressBar =new ProgressDialog(this);
         email_lgn = findViewById(R.id.email_login);
         password_lgn = findViewById(R.id.password_login);
 
@@ -48,6 +51,9 @@ public class LoginActivity extends AppCompatActivity {
                 }
                 else
                 {
+                    progressBar.setTitle("loging into account");
+                    progressBar.setMessage("please wait , while we verify your credentials");
+                    progressBar.show();
                     auth.signInWithEmailAndPassword(txt_email,txt_password)
                             .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                                 @Override

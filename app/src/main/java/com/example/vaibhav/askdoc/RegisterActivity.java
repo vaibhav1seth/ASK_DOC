@@ -1,5 +1,6 @@
 package com.example.vaibhav.askdoc;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -28,6 +29,7 @@ public class RegisterActivity extends AppCompatActivity {
     MaterialEditText username,email,password;
     Button tbn_register;
     FirebaseAuth auth;
+    private ProgressDialog progressBar;
     DatabaseReference reference;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +41,7 @@ public class RegisterActivity extends AppCompatActivity {
         password = findViewById(R.id.password);
         tbn_register = findViewById(R.id.btn_register);
         auth = FirebaseAuth.getInstance();
+        progressBar =new ProgressDialog(this);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Register");
@@ -71,6 +74,9 @@ public class RegisterActivity extends AppCompatActivity {
 
     private void register(final String username, final String email, String password){
 
+        progressBar.setTitle("creating new account");
+        progressBar.setMessage("please wait , while we create your account");
+        progressBar.show();
         auth.createUserWithEmailAndPassword(email,password)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
